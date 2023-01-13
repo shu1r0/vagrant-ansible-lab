@@ -2,7 +2,7 @@
 
 ## ネットワークの構成
 
-[topo](./topo.drawio.png)
+![topo](./topo.drawio.png)
 
 ## Ansibleの動作確認 (ansible-master)
 ```shell
