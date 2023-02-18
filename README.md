@@ -1,36 +1,39 @@
-# Vagrantでansibleの環境を作るときのメモ
+# Ansible environment on Vagrant
 
-## ネットワークの構成
+## Network Architecture
 
 ![topo](./topo.drawio.png)
 
-## Ansibleの動作確認 (ansible-master)
+- Master: Nodes to execute ansible.
+- Worker: Nodes configured by ansible.
+
+## Run Ansible (ansible-master)
 ```shell
-$ ansible-inventory  --graph --vers
-ansible-inventory [core 2.12.10]
+vagrant@master:~/share$ ansible-inventory  --graph --vers
+ansible-inventory [core 2.14.2]
   config file = /home/vagrant/share/ansible.cfg
   configured module search path = ['/home/vagrant/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
   ansible python module location = /usr/lib/python3/dist-packages/ansible
   ansible collection location = /home/vagrant/.ansible/collections:/usr/share/ansible/collections
   executable location = /usr/bin/ansible-inventory
-  python version = 3.8.10 (default, Nov 14 2022, 12:59:47) [GCC 9.4.0]
-  jinja version = 2.10.1
+  python version = 3.10.4 (main, Apr  2 2022, 09:04:19) [GCC 11.2.0] (/usr/bin/python3)
+  jinja version = 3.0.3
   libyaml = True
 ```
 
 
 ```shell
-$ ansible all -i hosts.yml --list-hosts
+vagrant@master:~/share$ ansible all -i hosts.yml --list-hosts
   hosts (2):
-    atnode00a
-    atnode00b
+    worker1
+    worker2
 ```
 
 
 ```shell
-$ ansible all -i hosts.yml -m command -a uptime
-atnode00a | CHANGED | rc=0 >>
- 16:32:54 up  2:51,  1 user,  load average: 0.00, 0.00, 0.00
-atnode00b | CHANGED | rc=0 >>
- 16:32:54 up  1:33,  1 user,  load average: 0.00, 0.00, 0.00
+vagrant@master:~/share$ ansible all -i hosts.yml -m command -a uptime
+worker1 | CHANGED | rc=0 >>
+ 09:31:46 up 7 min,  1 user,  load average: 0.00, 0.05, 0.05
+worker2 | CHANGED | rc=0 >>
+ 09:31:46 up 6 min,  1 user,  load average: 0.00, 0.06, 0.04
  ```

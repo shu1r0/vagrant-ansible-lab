@@ -1,7 +1,9 @@
 #!/bin/bash
 
 sudo apt-get update -y
-sudo apt-get upgrade -y
+# sudo apt-get upgrade -y
+
+sudo apt install -y avahi-daemon
 
 ## For japanese
 sudo timedatectl set-timezone Asia/Tokyo
